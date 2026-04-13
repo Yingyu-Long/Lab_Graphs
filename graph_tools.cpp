@@ -22,14 +22,19 @@
  */
 int GraphTools::findMinWeight(Graph& graph)
 {
-    // TODO
-    // 1. Label all edges and vertices as unexplored. You will need
-    //    to look in graph.h for the right functions.
+    vector<Vertex> vertices = graph.getVertices();
+    for (size_t i = 0; i < vertices.size(); ++i) {
+        graph.setVertexLabel(vertices[i], "UNEXPLORED");
+    }
 
-    // 2. Use the BFS function in graph_tools to find the minimum edge.
-    //    Don't forget to label it.
+    vector<Edge> edges = graph.getEdges();
+    for (size_t i = 0; i < edges.size(); ++i) {
+        graph.setEdgeLabel(edges[i].source, edges[i].dest, "UNEXPLORED");
+    }
 
-    return -1;
+    Edge min = BFS(graph, graph.getStartingVertex());
+    graph.setEdgeLabel(min.source, min.dest, "MIN");
+    return min.weight;
 }
 
 /**
